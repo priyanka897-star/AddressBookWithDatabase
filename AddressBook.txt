@@ -15,3 +15,18 @@ mysql> show databases;
 | testdb              |
 +---------------------+
 7 rows in set (0.07 sec)
+
+mysql> #UC2:Create addressbook table.
+mysql> create table addressbook
+    -> (
+    -> id INT unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> FirstName VARCHAR(50) NOT NULL,
+    -> LastName VARCHAR(50) NOT NULL,
+    -> Address VARCHAR(150) NOT NULL,
+    -> City VARCHAR(50) NOT NULL,
+    -> State VARCHAR(50) NOT NULL,
+    -> Zip VARCHAR(10) NOT NULL,
+    -> PhoneNumber INT NOT NULL,
+    -> Email VARCHAR(200) NOT NULL
+    -> );
+Query OK, 0 rows affected (2.44 sec)
