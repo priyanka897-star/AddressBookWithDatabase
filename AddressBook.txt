@@ -138,3 +138,40 @@ mysql> select * from addressbook where city = 'Thane' ORDER BY FirstName;
 | Shravani  | More      | Ram Nagar,Thane    | Thane | Maharashtra | 456789 | 8974561245  | shravanimore31@yahoo.com  |
 +-----------+-----------+--------------------+-------+-------------+--------+-------------+---------------------------+
 2 rows in set (0.06 sec)
+
+mysql> #UC9:Ability to indentify each AddressBook with name and Type.
+mysql> update addressbook set type ='AddressBook1' where  FirstName ='Neha' or FirstName ='Varnika';
+Query OK, 2 rows affected (0.17 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update addressbook set type ='AddressBook2' where  FirstName ='Monali' or FirstName ='Shravani';
+Query OK, 2 rows affected (0.06 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update addressbook set type ='AddressBook3' where  FirstName ='Hetal';
+Query OK, 1 row affected (0.23 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update addressbook set type ='Family' where  FirstName ='Monali' or FirstName ='Shravani';
+Query OK, 2 rows affected (0.35 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update addressbook set type ='Friends' where  FirstName ='Neha' or FirstName ='Varnika';
+Query OK, 2 rows affected (0.10 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update addressbook set type ='Profession' where  FirstName ='Hetal';
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+-----------+--------------+------------+----------------------+-----------+----------------+--------+-------------+---------------------------+
+| FirstName | LastName  | addressBook  | type       | Address              | City      | State          | Zip    | PhoneNumber | Email                     |
++-----------+-----------+--------------+------------+----------------------+-----------+----------------+--------+-------------+---------------------------+
+| Neha      | Deshpande | AddressBook1 | Friends    | Shanti Nagar,Thane   | Thane     | Maharashtra    | 456789 | 8974561245  | nehadeshpande12@yahoo.com |
+| Monali    | Yadav     | AddressBook2 | Family     | Saidabad             | Hyderabad | Andhra Pradesh | 500059 | 9977654245  | monayadav93@outlook.com   |
+| Hetal     | Thakkar   | AddressBook3 | Profession |  B/6 Vraj Complex    | Vadodara  | Gujarat        | 39007  | 7577654245  | hetalthakker@gmail.com    |
+| Varnika   | Shetty    | AddressBook1 | Friends    |  162,seppingsrdblr-1 | Banglore  | Karnataka      | 560001 | 8477654245  | varnikashetty34@gmail.com |
+| Shravani  | More      | AddressBook2 | Family     | Ram Nagar,Thane      | Thane     | Maharashtra    | 456789 | 8974561245  | shravanimore31@yahoo.com  |
++-----------+-----------+--------------+------------+----------------------+-----------+----------------+--------+-------------+---------------------------+
+5 rows in set (0.02 sec)
