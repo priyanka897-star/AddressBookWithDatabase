@@ -107,3 +107,25 @@ mysql> select  * from addressbook where city ='Thane' or state ='maharashtra';
 | Neha      | Deshpande | Shanti Nagar,Thane | Thane | Maharashtra | 456789 | 8974561245  | nehadeshpande12@yahoo.com |
 +-----------+-----------+--------------------+-------+-------------+--------+-------------+---------------------------+
 1 row in set (0.00 sec)
+mysql> #UC7:Return size(count) of addressbook by state and city.
+mysql> select state ,count(state) from addressbook Group By state;
++----------------+--------------+
+| state          | count(state) |
++----------------+--------------+
+| Maharashtra    |            1 |
+| Andhra Pradesh |            1 |
+| Gujarat        |            1 |
+| Karnataka      |            1 |
++----------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> select city ,count(city) from addressbook Group By city;
++-----------+-------------+
+| city      | count(city) |
++-----------+-------------+
+| Thane     |           1 |
+| Hyderabad |           1 |
+| Vadodara  |           1 |
+| Banglore  |           1 |
++-----------+-------------+
+4 rows in set (0.00 sec)
