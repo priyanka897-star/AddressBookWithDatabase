@@ -68,3 +68,19 @@ mysql> select * from addressbook;
 +-----------+-----------+----------------------+-----------+----------------+--------+-------------+---------------------------+
 5 rows in set (0.00 sec)
 
+mysql> #UC4:Edit Person records using their name.
+mysql> update addressbook set Address ='Saidabad' where FirstName ='Monali';
+Query OK, 1 row affected (0.15 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+-----------+----------------------+-----------+----------------+--------+-------------+---------------------------+
+| FirstName | LastName  | Address              | City      | State          | Zip    | PhoneNumber | Email                     |
++-----------+-----------+----------------------+-----------+----------------+--------+-------------+---------------------------+
+| Neha      | Deshpande | Shanti Nagar,Thane   | Thane     | Maharashtra    | 456789 | 8974561245  | nehadeshpande12@yahoo.com |
+| Kranti    | Kadam     | Mulund/Mumbai        | Mumbai    | Maharashtra    | 456304 | 9974561245  | kranti1993@gmail.com      |
+| Monali    | Yadav     | Saidabad             | Hyderabad | Andhra Pradesh | 500059 | 9977654245  | monayadav93@outlook.com   |
+| Hetal     | Thakkar   |  B/6 Vraj Complex    | Vadodara  | Gujarat        | 39007  | 7577654245  | hetalthakker@gmail.com    |
+| Varnika   | Shetty    |  162,seppingsrdblr-1 | Banglore  | Karnataka      | 560001 | 8477654245  | varnikashetty34@gmail.com |
++-----------+-----------+----------------------+-----------+----------------+--------+-------------+---------------------------+
+5 rows in set (0.07 sec)
