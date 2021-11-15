@@ -98,3 +98,12 @@ mysql> select * from addressbook;
 | Varnika   | Shetty    |  162,seppingsrdblr-1 | Banglore  | Karnataka      | 560001 | 8477654245  | varnikashetty34@gmail.com |
 +-----------+-----------+----------------------+-----------+----------------+--------+-------------+---------------------------+
 4 rows in set (0.16 sec)
+
+mysql> #UC6:Retrive records belonging to city or state in addressbook.
+mysql> select  * from addressbook where city ='Thane' or state ='maharashtra';
++-----------+-----------+--------------------+-------+-------------+--------+-------------+---------------------------+
+| FirstName | LastName  | Address            | City  | State       | Zip    | PhoneNumber | Email                     |
++-----------+-----------+--------------------+-------+-------------+--------+-------------+---------------------------+
+| Neha      | Deshpande | Shanti Nagar,Thane | Thane | Maharashtra | 456789 | 8974561245  | nehadeshpande12@yahoo.com |
++-----------+-----------+--------------------+-------+-------------+--------+-------------+---------------------------+
+1 row in set (0.00 sec)
