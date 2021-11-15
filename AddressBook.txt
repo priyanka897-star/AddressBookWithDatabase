@@ -26,7 +26,23 @@ mysql> create table addressbook
     -> City VARCHAR(50) NOT NULL,
     -> State VARCHAR(50) NOT NULL,
     -> Zip VARCHAR(10) NOT NULL,
-    -> PhoneNumber INT NOT NULL,
+    -> PhoneNumber VARCHAR(10) NOT NULL,
     -> Email VARCHAR(200) NOT NULL
     -> );
 Query OK, 0 rows affected (2.44 sec)
+mysql> describe addressbook;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int unsigned | NO   | PRI | NULL    | auto_increment |
+| FirstName   | varchar(50)  | NO   |     | NULL    |                |
+| LastName    | varchar(50)  | NO   |     | NULL    |                |
+| Address     | varchar(150) | NO   |     | NULL    |                |
+| City        | varchar(50)  | NO   |     | NULL    |                |
+| State       | varchar(50)  | NO   |     | NULL    |                |
+| Zip         | varchar(10)  | NO   |     | NULL    |                |
+| PhoneNumber | varchar(10)  | NO   |     | NULL    |                |
+| Email       | varchar(200) | NO   |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.08 sec)
+
