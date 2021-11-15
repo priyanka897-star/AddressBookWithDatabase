@@ -175,3 +175,13 @@ mysql> select * from addressbook;
 | Shravani  | More      | AddressBook2 | Family     | Ram Nagar,Thane      | Thane     | Maharashtra    | 456789 | 8974561245  | shravanimore31@yahoo.com  |
 +-----------+-----------+--------------+------------+----------------------+-----------+----------------+--------+-------------+---------------------------+
 5 rows in set (0.02 sec)
+mysql> #UC10:Ability to get number of contact persons count by type;
+mysql> select type ,count(type) from addressBook   Group By type ;
++------------+-------------+
+| type       | count(type) |
++------------+-------------+
+| Friends    |           2 |
+| Family     |           2 |
+| Profession |           1 |
++------------+-------------+
+3 rows in set (0.00 sec)
