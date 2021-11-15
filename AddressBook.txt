@@ -128,4 +128,13 @@ mysql> select city ,count(city) from addressbook Group By city;
 | Vadodara  |           1 |
 | Banglore  |           1 |
 +-----------+-------------+
-4 rows in set (0.00 sec)
+4 rows in set (0.00 s
+mysql> #UC8:Retrieve entries sorted alphabetically by name  for given city.
+mysql> select * from addressbook where city = 'Thane' ORDER BY FirstName;
++-----------+-----------+--------------------+-------+-------------+--------+-------------+---------------------------+
+| FirstName | LastName  | Address            | City  | State       | Zip    | PhoneNumber | Email                     |
++-----------+-----------+--------------------+-------+-------------+--------+-------------+---------------------------+
+| Neha      | Deshpande | Shanti Nagar,Thane | Thane | Maharashtra | 456789 | 8974561245  | nehadeshpande12@yahoo.com |
+| Shravani  | More      | Ram Nagar,Thane    | Thane | Maharashtra | 456789 | 8974561245  | shravanimore31@yahoo.com  |
++-----------+-----------+--------------------+-------+-------------+--------+-------------+---------------------------+
+2 rows in set (0.06 sec)
