@@ -541,4 +541,68 @@ mysql> select person.firstname,person.lastname,person.type,address.address,city.
 +-----------+-----------+------------+-----------+-----------+------------+---------------+--------------+
 5 rows in set (0.00 sec)
 
-
+mysql>#UC13:Ensure all retrieve queries done especially in UC 6, UC 7, UC 8 and UC 10 are working with new table structure
+mysql>#UC6
+mysql> select person.firstname,person.lastname,person.type,address.address,city.city_name,phone.phone,state.state_name,addressbook_type.addressbook from person inner join  contact on person.contact_id = contact.contact_id
+    -> inner join address on address.contact_id = contact.contact_id
+    -> inner join state on state.state_id = address.state_id
+    -> inner join addressbook_type on addressbook_type.addressbook_id = person.addressbook_id
+    -> inner join phone on phone.contact_id = contact.contact_id
+    -> inner join city on city.city_id = address.city_id
+    -> where city.city_name ='mumbai' or state .state_name ='Maharashtra';
++-----------+-----------+---------+-----------+-----------+------------+-------------+--------------+
+| firstname | lastname  | type    | address   | city_name | phone      | state_name  | addressbook  |
++-----------+-----------+---------+-----------+-----------+------------+-------------+--------------+
+| neha      | deshpande | Friends | ram nagar | mumbai    | 9856312145 | Maharashtra | addressbook1 |
++-----------+-----------+---------+-----------+-----------+------------+-------------+--------------+
+1 row in set (0.00 sec)
+mysql>#UC7:
+mysql> select state.state_name,count(state.state_name) from state inner join  address on state.state_id = address.state_id
+    -> group by state.state_name;
++---------------+-------------------------+
+| state_name    | count(state.state_name) |
++---------------+-------------------------+
+| Maharashtra   |                       1 |
+| kerala        |                       1 |
+| Karnataka     |                       1 |
+| AndhraPradesh |                       1 |
+| Manipur       |                       1 |
++---------------+-------------------------+
+5 rows in set (0.00 sec)
+mysql> select city.city_name,count(city.city_name) from city inner join  address on city.city_id = address.city_id
+    -> group by city.city_name;
++-----------+-----------------------+
+| city_name | count(city.city_name) |
++-----------+-----------------------+
+| mumbai    |                     1 |
+| kochi     |                     1 |
+| banglore  |                     1 |
+| Manipur   |                     1 |
+| Anantpuri |                     1 |
++-----------+-----------------------+
+5 rows in set (0.00 sec)
+mysql>#UC8
+mysql> select person.firstname,person.lastname,person.type,address.address,city.city_name,phone.phone,state.state_name,addressbook_type.addressbook from person inner join  contact on person.contact_id = contact.contact_id
+    -> inner join address on address.contact_id = contact.contact_id
+    -> inner join addressbook_type on addressbook_type.addressbook_id = person.addressbook_id
+    -> inner join phone on phone.contact_id = contact.contact_id
+    -> inner join city on city.city_id = address.city_id
+    -> inner join state on state.state_id = address.state_id
+    -> where city.city_name = 'mumbai' order by person.firstname;
++-----------+-----------+---------+-----------+-----------+------------+-------------+--------------+
+| firstname | lastname  | type    | address   | city_name | phone      | state_name  | addressbook  |
++-----------+-----------+---------+-----------+-----------+------------+-------------+--------------+
+| neha      | deshpande | Friends | ram nagar | mumbai    | 9856312145 | Maharashtra | addressbook1 |
++-----------+-----------+---------+-----------+-----------+------------+-------------+--------------+
+1 row in set (0.00 sec)
+UC10:
+mysql> select person.type,count(person.type) from person inner join  contact on person.contact_id = contact.contact_id
+    -> group by person.type;
++------------+--------------------+
+| type       | count(person.type) |
++------------+--------------------+
+| Friends    |                  2 |
+| Profession |                  2 |
+| Family     |                  1 |
++------------+--------------------+
+3 rows in set (0.00 sec)
