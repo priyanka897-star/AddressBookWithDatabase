@@ -202,3 +202,343 @@ mysql> select * from addressbook;
 | Swarali   | More      | AddressBook1 | Profession | M.P.Road             | Pune      | Maharashtra    | 345678 | 8456231279  | swaralimore45@gmail.com   |
 +-----------+-----------+--------------+------------+----------------------+-----------+----------------+--------+-------------+---------------------------+
 6 rows in set (0.14 sec)
+UC12:Apply 1NF on normalization.
+mysql> alter table addressbook add employee_id  numeric NULL after lastname;
+Query OK, 0 rows affected (3.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+-----------+-------------+--------------+------------+----------------------+----------+-------------+--------+-------------+---------------------------+
+| FirstName | LastName  | employee_id | addressBook  | type       | Address              | City     | State       | Zip    | phonenumber | Email                     |
++-----------+-----------+-------------+--------------+------------+----------------------+----------+-------------+--------+-------------+---------------------------+
+| Hetal     | Thakkar   |         103 | AddressBook3 | Profession |  B/6 Vraj Complex    | Vadodara | Gujarat     | 390081 | 7577654245  | hetalthakker@gmail.com    |
+| Monali    | yadav     |        NULL | AddressBook2 | Friends    | Ram Nagar,mumbai     | Thane    | Maharashtra | 456789 | 7845128963  | monadeshpande78@gmail.com |
+| Neha      | Deshpande |         101 | AddressBook1 | Friends    | Shanti Nagar,Thane   | Thane    | Maharashtra | 456789 | 7945235145  | nehadeshpande12@yahoo.com |
+| Swarali   | More      |        NULL | AddressBook1 | Profession | M.P.Road             | Pune     | Maharashtra | 345678 | 8456231279  | swaralimore45@gmail.com   |
+| Varnika   | Shetty    |        NULL | AddressBook1 | Friends    |  162,seppingsrdblr-1 | Banglore | Karnataka   | 560001 | 8477654245  | varnikashetty34@gmail.com |
+| Shravani  | More      |        NULL | AddressBook2 | Family     | Ram Nagar,Thane      | Thane    | Maharashtra | 456789 | 8974561245  | shravanimore31@yahoo.com  |
+| Neha      | Deshpande |         101 | AddressBook1 | Friends    | Shanti Nagar,Thane   | Thane    | Maharashtra | 456789 | 9974561245  | neha.deshpande@gmail.com  |
++-----------+-----------+-------------+--------------+------------+----------------------+----------+-------------+--------+-------------+---------------------------+
+7 rows in set (0.13 sec)
+mysql> select * from addressbook where employee_id =101;
++-----------+-----------+-------------+--------------+---------+--------------------+-------+-------------+--------+-------------+---------------------------+
+| FirstName | LastName  | employee_id | addressBook  | type    | Address            | City  | State       | Zip    | phonenumber | Email                     |
++-----------+-----------+-------------+--------------+---------+--------------------+-------+-------------+--------+-------------+---------------------------+
+| Neha      | Deshpande |         101 | AddressBook1 | Friends | Shanti Nagar,Thane | Thane | Maharashtra | 456789 | 7945235145  | nehadeshpande12@yahoo.com |
+| Neha      | Deshpande |         101 | AddressBook1 | Friends | Shanti Nagar,Thane | Thane | Maharashtra | 456789 | 9974561245  | neha.deshpande@gmail.com  |
++-----------+-----------+-------------+--------------+---------+--------------------+-------+-------------+--------+-------------+---------------------------+
+2 rows in set (0.00 sec)
+mysql>UC12:Apply 2NF on addressbook.
+mysql> create table contact
+    -> (
+    -> contact_id int not null,
+    -> primary key(contact_id)
+    -> );
+Query OK, 0 rows affected (1.95 sec)
+mysql> insert into contact (contact_id)values(1);
+Query OK, 1 row affected (0.22 sec)
+
+mysql> insert into contact (contact_id)values(2);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into contact (contact_id)values(3);
+Query OK, 1 row affected (0.20 sec)
+
+mysql> insert into contact (contact_id)values(4);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into contact (contact_id)values(5);
+Query OK, 1 row affected (0.23 sec)
+mysql> select * from contact;
++------------+
+| contact_id |
++------------+
+|          1 |
+|          2 |
+|          3 |
+|          4 |
+|          5 |
++------------+
+5 rows in set (0.00 sec)
+
+
+mysql> insert into contact (contact_id)values(1);
+Query OK, 1 row affected (0.22 sec)
+mysql> create table email
+    -> (
+    -> email_id numeric not null,
+    -> email varchar(150) not null,
+    -> contact_id numeric references contact(contact_id),
+    -> primary key(email_id)
+    -> );
+Query OK, 0 rows affected (2.09 sec)
+mysql> select * from email inner join  contact on email.contact_id = contact.contact_id;
++----------+-------------------------+------------+------------+
+| email_id | email                   | contact_id | contact_id |
++----------+-------------------------+------------+------------+
+|        1 | prachimane224@gmail.com |          1 |          1 |
+|        2 | vaishali97@outlook.com  |          2 |          2 |
+|        3 | nishasingh@gmail.com    |          3 |          3 |
+|        4 | kavya16@yahoo.com       |          4 |          4 |
+|        5 | neha2502@gmail.com      |          5 |          5 |
++----------+-------------------------+------------+------------+
+5 rows in set (0.00 sec)
+mysql> create table phone
+    -> (
+    -> phone_id numeric not null,
+    -> phone numeric not null,
+    -> contact_id numeric references contact(contact_id),
+    -> primary key(phone_id)
+    -> );
+Query OK, 0 rows affected (1.83 sec)
+mysql> insert into phone(phone_id,phone,contact_id)values(1,9856312145,1);
+Query OK, 1 row affected (0.21 sec)
+
+mysql> insert into phone(phone_id,phone,contact_id)values(2,8456319145,2);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into phone(phone_id,phone,contact_id)values(3,8856319149,3);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into phone(phone_id,phone,contact_id)values(4,9951319149,4);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into phone(phone_id,phone,contact_id)values(5,9551319149,5);
+Query OK, 1 row affected (0.16 sec)
+
+mysql> select * from phone;
++----------+------------+------------+
+| phone_id | phone      | contact_id |
++----------+------------+------------+
+|        1 | 9856312145 |          1 |
+|        2 | 8456319145 |          2 |
+|        3 | 8856319149 |          3 |
+|        4 | 9951319149 |          4 |
+|        5 | 9551319149 |          5 |
++----------+------------+------------+
+5 rows in set (0.00 sec)
+mysql> create table address
+    -> (
+    -> address_id numeric NOT NULL,
+    -> address varchar(150) NOT NULL,
+    -> city_id numeric references city(city_id),
+    -> state_id numeric references state(state_id),
+    -> contact_id numeric  references contact(contact_id),
+    -> primary key(address_id)
+    -> );
+Query OK, 0 rows affected (2.10 sec)
+mysql> create table address
+    -> (
+    -> address_id numeric NOT NULL,
+    -> address varchar(150) NOT NULL,
+    -> city_id numeric references city(city_id),
+    -> state_id numeric references state(state_id),
+    -> contact_id numeric  references contact(contact_id),
+    -> primary key(address_id)
+    -> );
+Query OK, 0 rows affected (2.10 sec)
+
+mysql> create table city
+    -> (
+    -> city_id numeric NOT NULL,
+    -> city_name varchar(50) NOT NULL,
+    -> state_id numeric references state(state_id),
+    -> primary key (city_id)
+    -> );
+Query OK, 0 rows affected (0.68 sec)
+
+mysql> create table state
+    -> (
+    -> state_id numeric NOT NULL,
+    -> state_name  varchar(50) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.78 sec)
+
+mysql> insert into state(state_id,state_name)values(1,'Maharashtra');
+Query OK, 1 row affected (0.23 sec)
+
+mysql> insert into state(state_id,state_name)values(2,'kerala');
+Query OK, 1 row affected (0.19 sec)
+
+mysql> insert into state(state_id,state_name)values(3,'Karnataka');
+Query OK, 1 row affected (0.19 sec)
+
+mysql> insert into state(state_id,state_name)values(4,'AndhraPradesh');
+Query OK, 1 row affected (0.21 sec)
+
+mysql> alter table  state modify state_id numeric not null primary key;
+Query OK, 0 rows affected (2.60 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe state;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| state_id   | decimal(10,0) | NO   | PRI | NULL    |       |
+| state_name | varchar(50)   | NO   |     | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+2 rows in set (0.12 sec)
+ysql> create table addressbook_type
+    -> (
+    -> addressbook_id numeric NOT NULL ,
+    -> addressbook varchar(150) NOT NULL,
+    -> PRIMARY KEY (addressbook_id)
+    -> );
+Query OK, 0 rows affected (0.43 sec)
+
+mysql> insert into addressbook_type(addressbook_id,addressbook)values(1,'addressbook1');
+Query OK, 1 row affected (0.18 sec)
+
+mysql> insert into addressbook_type(addressbook_id,addressbook)values(2,'addressbook2');
+Query OK, 1 row affected (0.17 sec)
+
+mysql> insert into addressbook_type(addressbook_id,addressbook)values(3,'addressbook3');
+Query OK, 1 row affected (0.17 sec)
+
+mysql> select * from addressbook_type;
++----------------+--------------+
+| addressbook_id | addressbook  |
++----------------+--------------+
+|              1 | addressbook1 |
+|              2 | addressbook2 |
+|              3 | addressbook3 |
++----------------+--------------+
+3 rows in set (0.00 sec)
+mysql> create table person
+    -> (
+    -> person_id numeric not null,
+    -> firstname varchar(50) not null,
+    -> lastname varchar(50) not null,
+    -> type varchar(50) not null,
+    -> contact_id numeric  references contact(contact_id),
+    -> addressbook_id  numeric references addressbook_type(addressbook_id),
+    -> primary key(person_id)
+    -> );
+Query OK, 0 rows affected (1.94 sec)
+
+mysql> describe person;
++----------------+---------------+------+-----+---------+-------+
+| Field          | Type          | Null | Key | Default | Extra |
++----------------+---------------+------+-----+---------+-------+
+| person_id      | decimal(10,0) | NO   | PRI | NULL    |       |
+| firstname      | varchar(50)   | NO   |     | NULL    |       |
+| lastname       | varchar(50)   | NO   |     | NULL    |       |
+| type           | varchar(50)   | NO   |     | NULL    |       |
+| contact_id     | decimal(10,0) | YES  |     | NULL    |       |
+| addressbook_id | decimal(10,0) | YES  |     | NULL    |       |
++----------------+---------------+------+-----+---------+-------+
+6 rows in set (0.19 sec)
+mysql> insert into person(person_id,firstname,lastname,type,contact_id,addressbook_id)values(1,'neha','deshpande','Friends',1,1);
+Query OK, 1 row affected (0.22 sec)
+
+mysql> insert into person(person_id,firstname,lastname,type,contact_id,addressbook_id)values(2,'Prachi','Desai','Profession',2,2);
+Query OK, 1 row affected (0.23 sec)
+
+mysql> insert into person(person_id,firstname,lastname,type,contact_id,addressbook_id)values(2,'Prachi','Desai','Profession',3,2);
+ERROR 1062 (23000): Duplicate entry '2' for key 'person.PRIMARY'
+mysql> insert into person(person_id,firstname,lastname,type,contact_id,addressbook_id)values(3,'Prachi','Desai','Profession',3,2);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into person(person_id,firstname,lastname,type,contact_id,addressbook_id)values(4,'geeta','sharma','Profession',4,3);
+Query OK, 1 row affected (0.47 sec)
+
+mysql> insert into person(person_id,firstname,lastname,type,contact_id,addressbook_id)values(5,'priya','More','Profession',5,1);
+Query OK, 1 row affected (0.17 sec)
+
+mysql> select  * from person;
++-----------+-----------+-----------+------------+------------+----------------+
+| person_id | firstname | lastname  | type       | contact_id | addressbook_id |
++-----------+-----------+-----------+------------+------------+----------------+
+|         1 | neha      | deshpande | Friends    |          1 |              1 |
+|         2 | Prachi    | Desai     | Profession |          2 |              2 |
+|         3 | Prachi    | Desai     | Profession |          3 |              2 |
+|         4 | geeta     | sharma    | Profession |          4 |              3 |
+|         5 | priya     | More      | Profession |          5 |              1 |
++-----------+-----------+-----------+------------+------------+----------------+
+5 rows in set (0.00 sec)
+
+
+mysql> update  person set firstname ='meera'  where person_id = 3;
+Query OK, 1 row affected (0.17 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update  person set lastname ='rajput'  where person_id = 3;
+Query OK, 1 row affected (0.15 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from person;
++-----------+-----------+-----------+------------+------------+----------------+
+| person_id | firstname | lastname  | type       | contact_id | addressbook_id |
++-----------+-----------+-----------+------------+------------+----------------+
+|         1 | neha      | deshpande | Friends    |          1 |              1 |
+|         2 | Prachi    | Desai     | Profession |          2 |              2 |
+|         3 | meera     | rajput    | Profession |          3 |              2 |
+|         4 | geeta     | sharma    | Profession |          4 |              3 |
+|         5 | priya     | More      | Profession |          5 |              1 |
++-----------+-----------+-----------+------------+------------+----------------+
+5 rows in set (0.00 sec)
+mysql> update person set type ='Family' where person_id = 3;
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update person set type ='Friends' where person_id = 4;
+Query OK, 1 row affected (0.19 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from person;
++-----------+-----------+-----------+------------+------------+----------------+
+| person_id | firstname | lastname  | type       | contact_id | addressbook_id |
++-----------+-----------+-----------+------------+------------+----------------+
+|         1 | neha      | deshpande | Friends    |          1 |              1 |
+|         2 | Prachi    | Desai     | Profession |          2 |              2 |
+|         3 | meera     | rajput    | Family     |          3 |              2 |
+|         4 | geeta     | sharma    | Friends    |          4 |              3 |
+|         5 | priya     | More      | Profession |          5 |              1 |
++-----------+-----------+-----------+------------+------------+----------------+
+5 rows in set (0.00 sec)
+mysql> select * from address;
++------------+-----------+---------+----------+------------+
+| address_id | address   | city_id | state_id | contact_id |
++------------+-----------+---------+----------+------------+
+|          1 | ram nagar |       1 |        1 |          1 |
+|          2 |  VNS      |       5 |        2 |          2 |
+|          3 |  GM       |       2 |        3 |          3 |
+|          4 |  MT       |       4 |        3 |          4 |
+|          5 | ST        |       3 |        4 |          5 |
++------------+-----------+---------+----------+------------+
+5 rows in set (0.13 sec)
+
+mysql> update address set  state_id = 5 where city_id =4;
+Query OK, 1 row affected (0.15 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from address;
++------------+-----------+---------+----------+------------+
+| address_id | address   | city_id | state_id | contact_id |
++------------+-----------+---------+----------+------------+
+|          1 | ram nagar |       1 |        1 |          1 |
+|          2 |  VNS      |       5 |        2 |          2 |
+|          3 |  GM       |       2 |        3 |          3 |
+|          4 |  MT       |       4 |        5 |          4 |
+|          5 | ST        |       3 |        4 |          5 |
++------------+-----------+---------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select person.firstname,person.lastname,person.type,address.address,city.city_name,phone.phone,state.state_name,addressbook_type.addressbook from person inner join  contact on person.contact_id = contact.contact_id
+    -> inner join address on address.contact_id = contact.contact_id
+    -> inner join state on state.state_id = address.state_id
+    -> inner join addressbook_type on addressbook_type.addressbook_id = person.addressbook_id
+    -> inner join phone on phone.contact_id = contact.contact_id
+    -> inner join city on city.city_id = address.city_id;
++-----------+-----------+------------+-----------+-----------+------------+---------------+--------------+
+| firstname | lastname  | type       | address   | city_name | phone      | state_name    | addressbook  |
++-----------+-----------+------------+-----------+-----------+------------+---------------+--------------+
+| neha      | deshpande | Friends    | ram nagar | mumbai    | 9856312145 | Maharashtra   | addressbook1 |
+| Prachi    | Desai     | Profession |  VNS      | kochi     | 8456319145 | kerala        | addressbook2 |
+| meera     | rajput    | Family     |  GM       | banglore  | 8856319149 | Karnataka     | addressbook2 |
+| geeta     | sharma    | Friends    |  MT       | Manipur   | 9951319149 | Manipur       | addressbook3 |
+| priya     | More      | Profession | ST        | Anantpuri | 9551319149 | AndhraPradesh | addressbook1 |
++-----------+-----------+------------+-----------+-----------+------------+---------------+--------------+
+5 rows in set (0.00 sec)
+
+
